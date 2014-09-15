@@ -22,7 +22,7 @@ for f in user_files:
 if not os.path.exists(CREDENTIALS_DIR):
     os.makedirs(CREDENTIALS_DIR)
 
-with open("%/settings.yml" % CREDENTIALS_DIR) as settings_file:
+with open("%s/settings.yml" % CREDENTIALS_DIR) as settings_file:
     user_data.update(yaml.safe_load(settings_file))
 
 with open("/tmp/envvars", "w") as envvar_file:
