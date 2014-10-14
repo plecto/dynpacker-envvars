@@ -17,7 +17,7 @@ bucket = conn.get_bucket('ls-%(CLOUD_ENVIRONMENT)s-credentials' % user_data, val
 user_files = list(bucket.list("%(CLOUD_DEV_PHASE)s/%(CLOUD_APP)s/" % user_data))
 
 for f in user_files:
-    if f.filename:  # Is a file
+    if not f.name.endswith("/"):  # Is a file
         local_file = f.name.split("/")[-1]
         f.get_contents_to_filename("%s/%s" % (CREDENTIALS_DIR, local_file))
 
