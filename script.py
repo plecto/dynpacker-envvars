@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import urllib2
 import yaml
 import re
@@ -16,14 +17,17 @@ bucket = conn.get_bucket('ls-%(CLOUD_ENVIRONMENT)s-credentials' % user_data, val
 user_files = list(bucket.list("%(CLOUD_DEV_PHASE)s/%(CLOUD_APP)s/" % user_data))
 
 for f in user_files:
-    local_file = f.name.split("/")[-1]
-    f.get_contents_to_filename("%s/%s" % (CREDENTIALS_DIR, local_file))
+    if f.filename:  # Is a file
+        local_file = f.name.split("/")[-1]
+        f.get_contents_to_filename("%s/%s" % (CREDENTIALS_DIR, local_file))
 
 if not os.path.exists(CREDENTIALS_DIR):
     os.makedirs(CREDENTIALS_DIR)
 
 with open("%s/settings.yml" % CREDENTIALS_DIR) as settings_file:
-    user_data.update(yaml.safe_load(settings_file))
+    user_env_vars = yaml.safe_load(settings_file)
+    if user_env_vars:
+        user_data.update(user_env_vars)
 
 with open("/tmp/envvars", "w") as envvar_file:
     envvar_file.write("\n".join(["export %s=\"%s\"" % itm for itm in user_data.items()]))
