@@ -16,13 +16,13 @@ user_data = dict([s.replace("export ", "").split("=") for s in re.findall("(?:\s
 bucket = conn.get_bucket('ls-%(CLOUD_ENVIRONMENT)s-credentials' % user_data, validate=False)
 user_files = list(bucket.list("%(CLOUD_DEV_PHASE)s/%(CLOUD_APP)s/" % user_data))
 
+if not os.path.exists(CREDENTIALS_DIR):
+    os.makedirs(CREDENTIALS_DIR)
+
 for f in user_files:
     if not f.name.endswith("/"):  # Is a file
         local_file = f.name.split("/")[-1]
         f.get_contents_to_filename("%s/%s" % (CREDENTIALS_DIR, local_file))
-
-if not os.path.exists(CREDENTIALS_DIR):
-    os.makedirs(CREDENTIALS_DIR)
 
 with open("%s/settings.yml" % CREDENTIALS_DIR) as settings_file:
     user_env_vars = yaml.safe_load(settings_file)
