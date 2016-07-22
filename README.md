@@ -19,3 +19,7 @@ Now when logging in, you will have the environment variables from User Data as w
 # How it finds credentials
 
 Looks for the following S3 bucket: ```ls-%(CLOUD_ENVIRONMENT)s-credentials``` and for the following subkeys: ```%(CLOUD_DEV_PHASE)s/%(CLOUD_APP)s/``` wgere the variables should be in EC2 User Data as e.g. 'export CLOUD_ENVIRONMENT=dev'.
+
+# See also
+
+[https://github.com/plecto/app-image-generator](App-image-generator)
