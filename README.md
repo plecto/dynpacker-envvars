@@ -22,4 +22,4 @@ Looks for the following S3 bucket: ```ls-%(CLOUD_ENVIRONMENT)s-credentials``` an
 
 # See also
 
-[https://github.com/plecto/app-image-generator](App-image-generator)
+[App-image-generator](https://github.com/plecto/app-image-generator)
