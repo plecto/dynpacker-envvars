@@ -10,7 +10,7 @@ CREDENTIALS_DIR = "/credentials"
 conn = boto.connect_s3()
 
 user_data_string = urllib2.urlopen("http://169.254.169.254/2012-01-12/user-data/").read()
-user_data = dict([s.replace("export ", "").split("=") for s in re.findall("(?:\s)?(export \w+\=\"?[\w- ]+\"?)+", user_data_string)])
+user_data = dict([s.replace("export ", "").split("=") for s in re.findall("(?:\s)?(export \w+\=\"?[\w\- ]+\"?)+", user_data_string)])
 
 # Must have validate false, because of strict IAM rules
 bucket = conn.get_bucket('ls-%(CLOUD_ENVIRONMENT)s-credentials' % user_data, validate=False)
